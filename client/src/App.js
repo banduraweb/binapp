@@ -1,12 +1,18 @@
 import React from 'react';
+import {HashRouter} from 'react-router-dom'
+import 'semantic-ui-css/semantic.min.css';
 
-
-
+import {useRoutes} from "./hooks/routes";
 function App() {
+
+    const routes = useRoutes(false);
+
   return (
-    <div className="App">
-     <h1>Test</h1>
-    </div>
+      <HashRouter>
+          <div className="container">
+              {routes}
+          </div>
+      </HashRouter>
   );
 }
 

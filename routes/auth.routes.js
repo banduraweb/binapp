@@ -8,7 +8,7 @@ require('dotenv').config();
 router.post('/registration',
 
     [
-        check('name', 'not valid name').exists(),
+       // check('name', 'not valid name').exists(),
         check('email', 'not valid email').isEmail(),
         check('password', 'min length 4 symbols').isLength({min: 4})
 
@@ -22,7 +22,7 @@ router.post('/registration',
                 return res.status(400).json({errors: errors.array(), message: 'Not valid registration data'})
             }
 
-            const {name, email, password} = req.body;
+            const {email, password} = req.body;
 
             const newUserRegistration = await User.findOne({email});
 
@@ -33,7 +33,7 @@ router.post('/registration',
             const hashedPassword = await bcrypt.hash(password, 12);
 
 
-            const user = new User({name, email, password: hashedPassword });
+            const user = new User({email, password: hashedPassword });
 
             await user.save();
 

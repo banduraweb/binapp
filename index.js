@@ -22,7 +22,7 @@ const connection = mongoose.connection;
 
     try {
        await mongoose.connect(process.env.MONGO_ATLAS_URI,
-           { useNewUrlParser: true, useCreateIndex: true });
+           { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true  });
         app.listen(port, ()=>{
             console.log(`Started..on.port.${port}`);
         });
