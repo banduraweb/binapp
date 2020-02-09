@@ -10,20 +10,21 @@ router.post('/registration',
     [
        // check('name', 'not valid name').exists(),
         check('email', 'not valid email').isEmail(),
-        check('password', 'min length 4 symbols').isLength({min: 4})
+        check('password', 'password min length 4 symbols').isLength({min: 4})
 
     ],
     async (req, res) => {
-
         try {
             const errors = validationResult(req);
 
             if (!errors.isEmpty()) {
-                return res.status(400).json({errors: errors.array(), message: 'Not valid registration data'})
+                return res.status(400).json({errors: errors.array(),
+                    message: `Not valid registration data:  ${errors.array().map(item=>item.msg)}`})
+                  //  message: JSON.stringify(errors.array())})
             }
 
             const {email, password} = req.body;
-
+            console.log(email, password);
             const newUserRegistration = await User.findOne({email});
 
             if (newUserRegistration) {
@@ -37,12 +38,12 @@ router.post('/registration',
 
             await user.save();
 
-            res.status(201).json({message: 'User created'})
+            res.status(201).json({message: 'You are registered'})
 
 
         } catch (e) {
 
-            res.status(500).json({message: e})
+            res.status(500).json({message:  'errrrrr'}) // change to my custom error e
         }
 
     });
@@ -78,12 +79,12 @@ router.post('/login',
             }
 
             const token = jwt.sign(
-                {usedId: user.id},
+                {userId: user.id},
                 process.env.jwtKey,
                 {expiresIn: "2h"}
             );
 
-            res.status(200).json({token, usedId: user.id});
+            res.status(200).json({token, userId: user.id});
 
         } catch (e) {
 
