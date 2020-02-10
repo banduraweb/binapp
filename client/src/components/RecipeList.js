@@ -1,5 +1,5 @@
 import React, {useContext, useState, useCallback, useEffect} from 'react';
-import {Button, Item, Grid} from 'semantic-ui-react'
+import {Button, Item, Grid, Icon} from 'semantic-ui-react'
 import {useHttp} from "../hooks/http";
 import {AuthContext} from "../context/AuthContext";
 import {useHistory} from 'react-router-dom'
@@ -17,7 +17,7 @@ export const RecipeList=({recipes})=>{
         setRenderData(recipes)
     }, [recipes]);
 
-    const [visibleHistory, setVisibleHistory] = useState(false);
+
     const {loading, request} = useHttp();
     const {token} = useContext(AuthContext);
 
@@ -42,46 +42,61 @@ export const RecipeList=({recipes})=>{
     if (loading) {
         return <Preloader/>
     }
+    console.log(renderData,'renderData');
+
+
+
 
     return(
         <Grid className="container" >
             <Grid.Row>
                 {renderData.map(({__history, _id, title, calories, ingredients, preparation}) =>
 
-                    <Grid.Column width={8} key={_id} style={
-                        {border: "1px solid #f3f3f3", boxShadow: "0 0 8px 0 #e0e0e0"}
+                    <Grid.Column width={16} key={_id} style={
+                        {border: "1px solid #f3f3f3",
+                            boxShadow: "0 0 8px 0 #e0e0e0",
+                              margin: "10px 0",
+                            backgroundColor: "#cedf90",
+                            padding: "10px"
+                        }
                     }>
-                            <Item >
+                            <Item>
                                 <Item.Content verticalAlign='middle'>
-                                    <Item.Header>{title}, {calories}</Item.Header>
-                                    <Item.Description>{ingredients}</Item.Description>
-                                    <Item.Description>{preparation}</Item.Description>
+                                    <Item.Header><i className="fas fa-utensil-spoon">Recipe</i>&emsp;{title}
+                                        <br/>
+                                        <i className="fas fa-hamburger">Calories</i> &emsp; {calories}</Item.Header>
+                                    <Item.Description><Icon  name='food' />Ingredients: &emsp; {ingredients}</Item.Description>
+                                    <Item.Description><Icon  name='american sign language interpreting' />
+                                        Preparation: &emsp;
+                                    {preparation}</Item.Description>
                                     <Item.Extra>
-                                        <Button
+                                        <Button style={{backgroundColor:"#fecdc7"}}
                                             floated='right'
                                             onClick={() => deleteRecipe(_id)}
                                         >Remove</Button>
                                     </Item.Extra>
                                     <Item.Extra>
-                                        <Button
+                                        <Button style={{backgroundColor:"#bbdb93"}}
                                             onClick={() => {
                                                 history.push(`/${_id}`)
                                             }}
                                             floated='right'>Edit</Button>
                                     </Item.Extra>
-                                    {__history.length > 0 &&
-                                        <>
-                                    <Item.Extra>
-                                        <Button
-                                            onClick={()=>setVisibleHistory(true)}
-                                            floated='right'>See prev versions</Button>
-                                    </Item.Extra>
-                                            {visibleHistory && <ShowHistory historyRecipe={__history}/>}
-                                       </>
-                                    }
+
 
                                 </Item.Content>
+
                             </Item>
+                        {__history.length > 0 &&
+                        <div style={{margin: "80px 0"}}>
+
+                            <ShowHistory historyRecipe={__history}
+                                         id={_id}
+                            />
+
+                        </div>
+                        }
+
                         </Grid.Column>
 
 
@@ -93,6 +108,4 @@ export const RecipeList=({recipes})=>{
     )
 
 };
-
-
 

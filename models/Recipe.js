@@ -3,10 +3,10 @@ const mongooseHistory = require('mongoose-history');
 
 
 const recipeSchema = new Schema({
-    title: {type: String, required: true},
-    calories: {type: Number, required: true},
-    ingredients: {type: String, required: true},
-    preparation: {type: String},
+    title: {type: String,  default: "Name"},
+    calories: {type: Number,  default: 0},
+    ingredients: {type: String,  default: "Ingredients"},
+    preparation: {type: String, default: "Preparation"},
     __history: {type: Array},
     owner: {type: Types.ObjectId, ref: 'User'}
 },

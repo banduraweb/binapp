@@ -18,7 +18,7 @@ router.post('/add', auth, async (req, res)=>{
 
     } catch (e) {
 
-        res.status(500).json({message:  'errrrrr'}) // change to my custom error e
+        res.status(500).json({message:  '/add'})
     }
 
 });
@@ -27,12 +27,12 @@ router.get('/', auth, async (req, res)=>{
 
     try {
 
-            const recipes = await Recipe.find({ owner: req.user.userId });  ///????
+            const recipes = await Recipe.find({ owner: req.user.userId });
             res.json(recipes)
 
     } catch (e) {
 
-        res.status(500).json({message:  'errrrrr'}) // change to my custom error e
+        res.status(500).json({message:  '/'})
     }
 
 });
@@ -47,7 +47,7 @@ router.delete('/delete:id', auth, async (req, res)=>{
 
     } catch (e) {
 
-        res.status(500).json({message:  'errrrrr'}) // change to my custom error e
+        res.status(500).json({message:  '/delete:id'})
     }
 
 
@@ -59,14 +59,14 @@ router.get('/:id', auth, async (req, res)=>{
 
 
     try {
-       // console.log(req.params.id,'req.params.id');
-        const upDateRecipe =  await Recipe.findById(req.params.id);  ///????
+
+        const upDateRecipe =  await Recipe.findById(req.params.id);
 
         res.json(upDateRecipe)
 
     } catch (e) {
 
-        res.status(500).json({message:  'errrrrr'}) // change to my custom error e
+        res.status(500).json({message:  '/:id'})
     }
 
 
@@ -77,21 +77,27 @@ router.post('/update:id', auth, async (req, res)=>{
 
 
     try {
-        console.log(req.params.id,'req.params.id update');
-        const upDateRecipe =  await Recipe.findById(req.params.id);  ///????
-        console.log(upDateRecipe['__history'], 'upDateRecipe');
 
-        const __history = [...upDateRecipe['__history'],upDateRecipe];
+        const upDateRecipe =  await Recipe.findById(req.params.id);
+
+        const {__history } = upDateRecipe;
+        __history.push({
+            id: upDateRecipe._id,
+            title: upDateRecipe.title,
+            calories: upDateRecipe.calories,
+            ingredients: upDateRecipe.ingredients,
+            preparation: upDateRecipe.preparation
+        });
 
         const {title, calories, ingredients, preparation} = req.body;
-        //
+
          await upDateRecipe.update({title, calories, ingredients, preparation, __history});
 
         res.json({message:  'updated'})
 
     } catch (e) {
 
-        res.status(500).json(e) // change to my custom error e
+        res.status(500).json({message:  'update error'})
     }
 
 
@@ -99,4 +105,4 @@ router.post('/update:id', auth, async (req, res)=>{
 
 
 
-module .exports = router;
+module.exports = router;
