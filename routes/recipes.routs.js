@@ -38,16 +38,62 @@ router.get('/', auth, async (req, res)=>{
 });
 
 
-router.get('/:id', auth, async (req, res)=>{
+router.delete('/delete:id', auth, async (req, res)=>{
 
     try {
-        const recipe = await Recipe.findById(req.params.id);  ///????
-        res.json(recipe)
+        await Recipe.findByIdAndDelete(req.params.id);
+
+        res.json({message:  'recipe deleted'})
 
     } catch (e) {
 
         res.status(500).json({message:  'errrrrr'}) // change to my custom error e
     }
+
+
+});
+
+
+
+router.get('/:id', auth, async (req, res)=>{
+
+
+    try {
+       // console.log(req.params.id,'req.params.id');
+        const upDateRecipe =  await Recipe.findById(req.params.id);  ///????
+
+        res.json(upDateRecipe)
+
+    } catch (e) {
+
+        res.status(500).json({message:  'errrrrr'}) // change to my custom error e
+    }
+
+
+});
+
+
+router.post('/update:id', auth, async (req, res)=>{
+
+
+    try {
+        console.log(req.params.id,'req.params.id update');
+        const upDateRecipe =  await Recipe.findById(req.params.id);  ///????
+        console.log(upDateRecipe['__history'], 'upDateRecipe');
+
+        const __history = [...upDateRecipe['__history'],upDateRecipe];
+
+        const {title, calories, ingredients, preparation} = req.body;
+        //
+         await upDateRecipe.update({title, calories, ingredients, preparation, __history});
+
+        res.json({message:  'updated'})
+
+    } catch (e) {
+
+        res.status(500).json(e) // change to my custom error e
+    }
+
 
 });
 

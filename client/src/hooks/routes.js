@@ -16,7 +16,7 @@ export const useRoutes = isAuth => {
                 <Route path="/create" exact>
                     <CreateRecipe/>
                 </Route>
-                <Route path="/detail/:id" exact>
+                <Route path="/:id" exact>
                     <OneRecipe/>
                 </Route>
                 <Redirect to="/create"/>

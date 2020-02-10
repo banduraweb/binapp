@@ -81,7 +81,7 @@ router.post('/login',
             const token = jwt.sign(
                 {userId: user.id},
                 process.env.jwtKey,
-                {expiresIn: "2h"}
+                {expiresIn: "24h"}
             );
 
             res.status(200).json({token, userId: user.id});
