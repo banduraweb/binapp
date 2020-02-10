@@ -30,7 +30,7 @@ router.post(
             }
 
             const { email, password } = req.body;
-            console.log(email, password);
+
             const newUserRegistration = await User.findOne({ email });
 
             if (newUserRegistration) {

@@ -7,7 +7,6 @@ import { AuthContext } from "../context/AuthContext";
 export const OneRecipe = () => {
     const history = useHistory();
     const { id } = useParams();
-    console.log(id, "params");
     const { token } = useContext(AuthContext);
     const { request } = useHttp();
     const [formData, setFormData] = useState({
@@ -27,7 +26,7 @@ export const OneRecipe = () => {
                     Authorization: `Bearer ${token}`
                 }
             );
-            console.log(data);
+
             const { title, calories, ingredients, preparation } = data;
 
             setFormData({
@@ -40,7 +39,6 @@ export const OneRecipe = () => {
     }, [token, request, id]);
 
     useEffect(() => {
-        console.log("me");
         fetchForUpdate();
     }, [fetchForUpdate]);
 
@@ -48,7 +46,7 @@ export const OneRecipe = () => {
         setFormData({ ...formData, [event.target.name]: event.target.value });
     };
 
-    console.log(formData, "formData");
+
     const handleConfirm = async () => {
         try {
             const data = await request(
@@ -60,7 +58,7 @@ export const OneRecipe = () => {
                 }
             );
             history.push("/recipes");
-            console.log(data, "data");
+
         } catch (e) {}
     };
 

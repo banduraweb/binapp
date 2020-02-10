@@ -14,7 +14,7 @@ export const Recipes = () => {
             const data = await request("http://localhost:8081/recipe/", "GET", null, {
                 Authorization: `Bearer ${token}`
             });
-            console.log(data, "recipes");
+
             setRecipes(data);
         } catch (e) {}
     }, [token, request]);

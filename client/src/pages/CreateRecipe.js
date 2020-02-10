@@ -30,7 +30,6 @@ export const CreateRecipe = () => {
                 }
             );
             history.push("/recipes");
-            console.log(data, "data");
         } catch (e) {}
     };
 

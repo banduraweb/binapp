@@ -40,7 +40,7 @@ export const RecipeList = ({ recipes }) => {
     if (loading) {
         return <Preloader />;
     }
-    console.log(renderData, "renderData");
+
 
     return (
         <Grid className="container">
