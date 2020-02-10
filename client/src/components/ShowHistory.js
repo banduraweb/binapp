@@ -5,16 +5,16 @@ export const ShowHistory =({historyRecipe})=>{
 
 
     const [visibleHistory, setVisibleHistory] = useState([]);
-
+    console.log(visibleHistory,'visibleHistory');
     return (
         <div>
             <Button style={{backgroundColor:"#b0d3bf"}}
                 onClick={()=>setVisibleHistory(historyRecipe)}
                 floated='right'>See prev versions
             </Button>
-            {visibleHistory.length > 0 && visibleHistory.map(({title, calories, ingredients, preparation})=>
-                <Message  key={title} style={
-                    {border: "1px solid #f3f3f3", boxShadow: "0 0 8px 0 #e0e0e0", backgroundColor: "#ffa5a9"}
+            {visibleHistory.length > 0 && visibleHistory.map(({un_id, title, calories, ingredients, preparation})=>
+                <Message  key={un_id} style={
+                    {border: "1px solid #f3f3f3", boxShadow: "0 0 8px 0 #e0e0e0", backgroundColor: "#FFCC66"}
                 }>
                     <Message.Header>
                         <i className="fas fa-utensil-spoon">Recipe</i>&emsp; {title}

@@ -1,5 +1,4 @@
 const {Schema, model, Types} = require('mongoose');
-const mongooseHistory = require('mongoose-history');
 
 
 const recipeSchema = new Schema({
@@ -14,6 +13,6 @@ const recipeSchema = new Schema({
         timestamps: true,
     });
 
-recipeSchema.plugin(mongooseHistory);
+
 
 module.exports = model('Recipe', recipeSchema);

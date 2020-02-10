@@ -56,7 +56,7 @@ export const RecipeList=({recipes})=>{
                         {border: "1px solid #f3f3f3",
                             boxShadow: "0 0 8px 0 #e0e0e0",
                               margin: "10px 0",
-                            backgroundColor: "#cedf90",
+                            backgroundColor: "#FFFFCC",
                             padding: "10px"
                         }
                     }>

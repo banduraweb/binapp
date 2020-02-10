@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const auth = require('../middleware/auth.middleware');
 const {check, validationResult} = require('express-validator');
+const uuidv1 = require('uuid/v1');
 const Recipe = require('../models/Recipe');
 
 
@@ -83,6 +84,7 @@ router.post('/update:id', auth, async (req, res)=>{
         const {__history } = upDateRecipe;
         __history.push({
             id: upDateRecipe._id,
+            un_id: uuidv1(),
             title: upDateRecipe.title,
             calories: upDateRecipe.calories,
             ingredients: upDateRecipe.ingredients,
