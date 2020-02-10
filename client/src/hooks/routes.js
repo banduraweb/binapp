@@ -1,37 +1,34 @@
-import React from 'react';
-import {Switch, Route, Redirect} from "react-router-dom";
-import {Recipes} from "../pages/Recipes";
-import {CreateRecipe} from "../pages/CreateRecipe";
-import {OneRecipe} from "../pages/OneRecipe";
-import {Auth} from "../pages/Auth";
+import React from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+import { Recipes } from "../pages/Recipes";
+import { CreateRecipe } from "../pages/CreateRecipe";
+import { OneRecipe } from "../pages/OneRecipe";
+import { Auth } from "../pages/Auth";
 
 export const useRoutes = isAuth => {
-
     if (isAuth) {
         return (
             <Switch>
                 <Route path="/recipes" exact>
-                    <Recipes/>
+                    <Recipes />
                 </Route>
                 <Route path="/create" exact>
-                    <CreateRecipe/>
+                    <CreateRecipe />
                 </Route>
                 <Route path="/:id" exact>
-                    <OneRecipe/>
+                    <OneRecipe />
                 </Route>
-                <Redirect to="/create"/>
-
+                <Redirect to="/create" />
             </Switch>
-        )
+        );
     }
 
     return (
         <Switch>
             <Route path="/" exact>
-                <Auth/>
+                <Auth />
             </Route>
-            <Redirect to="/"/>
+            <Redirect to="/" />
         </Switch>
-    )
-
+    );
 };

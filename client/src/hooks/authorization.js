@@ -1,40 +1,39 @@
-import {useState, useCallback, useEffect} from 'react';
+import { useState, useCallback, useEffect } from "react";
 
-const storageKey = 'userData';
+const storageKey = "userData";
 
 export const useAuthorization = () => {
-
     const [token, setToken] = useState(null);
     const [authFinished, setAuthFinished] = useState(false);
     const [userId, setUserId] = useState(null);
 
-    const login = useCallback((jwt, id)=>{
+    const login = useCallback((jwt, id) => {
         setToken(jwt);
         setUserId(id);
 
-        localStorage.setItem(storageKey, JSON.stringify({
-            userId: id, token: jwt
-        }))
+        localStorage.setItem(
+            storageKey,
+            JSON.stringify({
+                userId: id,
+                token: jwt
+            })
+        );
+    }, []);
 
-    },[]);
-
-
-    const logout = useCallback(()=>{
+    const logout = useCallback(() => {
         setToken(null);
         setUserId(null);
-        localStorage.removeItem(storageKey)
-    },[]);
+        localStorage.removeItem(storageKey);
+    }, []);
 
-
-    useEffect(()=>{
+    useEffect(() => {
         const data = JSON.parse(localStorage.getItem(storageKey));
 
         if (data && data.token) {
-            login(data.token, data.userId)
+            login(data.token, data.userId);
         }
         setAuthFinished(true);
-    },[login]);
-
+    }, [login]);
 
     return {
         login,
@@ -42,5 +41,5 @@ export const useAuthorization = () => {
         token,
         userId,
         authFinished
-    }
+    };
 };

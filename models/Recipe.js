@@ -1,6 +1,5 @@
 const {Schema, model, Types} = require('mongoose');
 
-
 const recipeSchema = new Schema({
     title: {type: String,  default: "Name"},
     calories: {type: Number,  default: 0},
@@ -12,7 +11,5 @@ const recipeSchema = new Schema({
     {
         timestamps: true,
     });
-
-
 
 module.exports = model('Recipe', recipeSchema);
